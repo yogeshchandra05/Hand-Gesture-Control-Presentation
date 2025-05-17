@@ -160,6 +160,15 @@ while True:
             if j != 0:
                 cv.line(imgCurrent, annotations[i][j - 1], annotations[i][j], (0, 125, 23), 12)
 
+    # resize the slide
+    imgCurrent = cv.resize(imgCurrent, (width, height))
+    
+    #adding webcam on slide
+    
+    imgSmall=cv.resize(img,(ws,hs))
+    h,w,_ =imgCurrent.shape
+
+    imgCurrent[0:hs, w-ws:w]= imgSmall
 
     #Resize imgCurrent based on zoomScale
     zoomedSlide = cv.resize(imgCurrent, None, fx=zoomScale, fy=zoomScale)
