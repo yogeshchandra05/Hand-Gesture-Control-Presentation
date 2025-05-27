@@ -4,6 +4,7 @@ import os
 from cvzone.HandTrackingModule import HandDetector
 import numpy as np
 from pyparsing import annotations
+import re 
 import speech_recognition as sr  # Library for speech recognition
 
 # ========== VARIABLE INITIALIZATION ==========
@@ -264,6 +265,21 @@ while True:
         elif "exit" in command or "quit" in command:
             print("Exiting by voice command.")
             break
+        # move slide to specific no. 
+         elif "slide" in command:
+            numbers = re.findall(r'\d+', command)
+            if numbers:
+                slide_num = int(numbers[0]) - 1  # Convert to 0-based index
+                if 0 <= slide_num < len(path_images):
+                    imgNumber = slide_num
+                    print(f"Jumping to Slide {slide_num + 1}")
+                    annotations = [[]]
+                    annotationNumber = -1
+                    annotationStart = False
+                else:
+                    print("Slide number out of range.")
+            else:
+                print("Couldn't detect a slide number.")
 
 # ========== CLEANUP ==========
 cap.release()  # Release camera
